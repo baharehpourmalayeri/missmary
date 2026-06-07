@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "avenirregular";
+  src: url("assets/fonts/Avenir Next Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "avenirbold";
+  src: url("assets/fonts/Avenir Next Demi Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@theme {
+  --color-primary: #528c69;
+  --color-black: #383838;
+  --color-grey: #f3f2ef;
+  --color-white: #faf9f6;
+  --color-light-green: #d7eed4;
+
+  --font-regular: "avenirregular", sans-serif;
+  --font-bold: "avenirbold", sans-serif;
+
+  --text-sm: 14px;
+  --text-xs: 10px;
+}
