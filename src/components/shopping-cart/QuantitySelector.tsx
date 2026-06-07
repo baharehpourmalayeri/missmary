@@ -8,7 +8,7 @@ function QuantitySelector() {
         <img src="/src/assets/icons/minus.svg" alt="minus icon" />
       </button>
 
-      <span className="w-8 text-center text-sm font-black">1</span>
+      <span className="w-8 text-center font-black">1</span>
 
       <button
         type="button"

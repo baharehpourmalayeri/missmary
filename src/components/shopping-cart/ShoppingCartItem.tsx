@@ -25,18 +25,16 @@ function ShoppingCartItem({
       </a>
       <div className="flex-1 flex flex-col justify-between">
         <div className="flex flex-col gap-1">
-          <h2 className="col-start-2 col-end-4 row-start-1 text-sm font-bold">
+          <h2 className="col-start-2 col-end-4 row-start-1 font-bold">
             {name}
           </h2>
           <div className="row-start-3 flex flex-row">
-            <span className="text-sm mr-2 after:ml-2 after:content-['|']">
-              {size}
-            </span>
-            <span className="text-sm">{color}</span>
+            <span className="mr-2 after:ml-2 after:content-['|']">{size}</span>
+            <span>{color}</span>
           </div>
 
           <div className="col-start-2 col-end-4 row-start-4 mt-1">
-            <span className="inline bg-[#D7EED4] px-2 py-1 text-sm text-black">
+            <span className="inline bg-[#D7EED4] px-2 py-1 text-black">
               {availabilityText}
             </span>
           </div>

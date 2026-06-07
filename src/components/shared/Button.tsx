@@ -9,7 +9,7 @@ function Button({ customClass, label }: ButtonProps) {
       href="#"
       className={`flex h-12 w-full items-center justify-center rounded-md bg-primary px-5 text-white font-bold transition-colors hover:opacity-90 ${customClass ? customClass : ""}`}
     >
-      <span className="text-sm font-semibold whitespace-nowrap">{label}</span>
+      <span className="font-bold whitespace-nowrap">{label}</span>
     </a>
   );
 }
