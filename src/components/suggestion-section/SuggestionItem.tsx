@@ -4,6 +4,7 @@ type SuggestionItemProps = {
   name: string;
   price: number;
   offerText?: string;
+  onAddClick: () => void;
 };
 
 function SuggestionItem({
@@ -12,17 +13,22 @@ function SuggestionItem({
   name,
   price,
   offerText,
+  onAddClick,
 }: SuggestionItemProps) {
   return (
     <div attr-id={id} className="flex flex-col gap-1 w-25 lg:w-30">
       <div className="relative">
-        <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center absolute top-1 right-1">
+        <button
+          type="button"
+          onClick={onAddClick}
+          className="bg-white rounded-full w-9 h-9 flex items-center justify-center absolute top-1 right-1 cursor-pointer"
+        >
           <img
             src="/src/assets/icons/cart.svg"
             alt="Cart"
-            className="w-4 h-4"
+            className="h-5 w-5"
           />
-        </div>
+        </button>
         <img
           src={imageSrc}
           alt={name}
