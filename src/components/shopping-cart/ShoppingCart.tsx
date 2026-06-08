@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
 import { Button } from "../shared/Button";
 import { SuggestionSection } from "../suggestion-section/SuggestionSection";
 import ShoppingCartItem from "./ShoppingCartItem";
+import {
+  shoppingCartService,
+  type CartItem,
+} from "../../services/ShoppingCart";
 
 function ShoppingCart() {
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    shoppingCartService.getItems(),
+  );
+  const [totalPrice, setTotalPrice] = useState<number>(
+    shoppingCartService.getTotal(),
+  );
+
+  useEffect(() => {
+    shoppingCartService.subscribe((items) => {
+      setCartItems(items);
+      setTotalPrice(shoppingCartService.getTotal());
+    });
+  }, []);
+
   return (
     <div className="fixed inset-0 z-60 bg-black/80">
       <section className="fixed lg:top-0 lg:w-160 lg:h-full z-80 bg-white px-6 py-6 flex flex-col overflow-x-hidden bottom-0 left-0 right-0 mt-24 lg:mt-0 lg:left-auto focus:outline-none">
@@ -36,15 +55,19 @@ function ShoppingCart() {
               </span>
             </div>
             <section className="flex w-full flex-col items-center gap-4 mb-6">
-              <ShoppingCartItem
-                id="6"
-                imageSrc="../src/assets/images/product-images/6.jpg"
-                name="Belle bh"
-                size="85xE"
-                color="Dimrosa"
-                availabilityText="I lager. Skickas inom 1-2 veckor."
-                price={599}
-              />
+              {cartItems.map((item) => (
+                <ShoppingCartItem
+                  key={item.id}
+                  id={item.id}
+                  imageSrc={item.imageUrl}
+                  name={item.name}
+                  size={item.size}
+                  color={item.color}
+                  quantity={item.quantity}
+                  availabilityText={item.availabilityText || "I lager"}
+                  price={item.price * item.quantity}
+                />
+              ))}
             </section>
             <SuggestionSection />
           </div>
@@ -53,7 +76,7 @@ function ShoppingCart() {
               <div className="flex flex-col justify-between">
                 <div className="flex flex-row justify-between">
                   <span>Delsumma</span>
-                  <span>599 kr</span>
+                  <span>{totalPrice} kr</span>
                 </div>
                 <div className="flex flex-row justify-between">
                   <span>Leverans</span>
@@ -62,7 +85,7 @@ function ShoppingCart() {
               </div>
               <div className="flex flex-row justify-between">
                 <span className="font-bold">Totalsumma</span>
-                <span className="font-bold">648 kr</span>
+                <span className="font-bold">{totalPrice + 49} kr</span>
               </div>
             </div>
             <div className="flex flex-col gap-4 mt-4">

@@ -1,3 +1,4 @@
+import { shoppingCartService } from "../../services/ShoppingCart";
 import { QuantitySelector } from "./QuantitySelector";
 
 type ShoppingCartItemProps = {
@@ -8,6 +9,7 @@ type ShoppingCartItemProps = {
   color: string;
   availabilityText: string;
   price: number;
+  quantity: number;
 };
 function ShoppingCartItem({
   imageSrc,
@@ -16,8 +18,16 @@ function ShoppingCartItem({
   size,
   color,
   availabilityText,
+  quantity,
   price,
 }: ShoppingCartItemProps) {
+  const handleIncrease = () => {
+    shoppingCartService.increaseProductQuantity(id, 1);
+  };
+  const handleDecrease = () => {
+    shoppingCartService.decreaseProductQuantity(id, 1);
+  };
+
   return (
     <div attr-id={id} className="flex w-full flex-row gap-4 h-34">
       <a href="/">
@@ -40,7 +50,11 @@ function ShoppingCartItem({
           </div>
         </div>
         <div className="flex flex-row justify-between items-center align-center">
-          <QuantitySelector />
+          <QuantitySelector
+            quantity={quantity}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+          />
           <div className="flex">
             <span className="font-bold">{price} kr</span>
           </div>
