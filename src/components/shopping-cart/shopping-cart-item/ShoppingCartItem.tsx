@@ -1,5 +1,5 @@
-import { shoppingCartService } from "../../services/ShoppingCart";
-import { QuantitySelector } from "./QuantitySelector";
+import { shoppingCartService } from "../../../services/ShoppingCart";
+import { QuantitySelector } from "../quantity-selector/QuantitySelector";
 
 type ShoppingCartItemProps = {
   imageSrc: string;

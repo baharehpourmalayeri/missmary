@@ -1,4 +1,4 @@
-import { SizeSelector } from "../shared/SizeSelector";
+import { SizeSelector } from "./SizeSelector";
 import { Button } from "../shared/Button";
 
 type SizeSelectionSheetProps = {

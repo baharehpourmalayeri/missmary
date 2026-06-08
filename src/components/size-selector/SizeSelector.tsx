@@ -1,4 +1,4 @@
-import { SizeButton } from "./SizeButton";
+import { SizeButton } from "../shared/SizeButton";
 
 type ProductType = "bra" | "panty" | "clothing";
 

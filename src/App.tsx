@@ -1,7 +1,7 @@
 import "./App.css";
 import { Header } from "./components/header/Header";
 import { ProductDetail } from "./pages/ProductDetail";
-import { ShoppingCart } from "./components/shopping-cart/ShoppingCart";
+import { ShoppingCart } from "./components/shopping-cart/shopping-cart/ShoppingCart";
 
 function App() {
   return (

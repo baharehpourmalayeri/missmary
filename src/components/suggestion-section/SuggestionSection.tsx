@@ -1,11 +1,7 @@
-import { useState } from "react";
 import SuggestionItem from "./SuggestionItem";
-import { SizeSelectionSheet } from "../shopping-cart/SizeSelectionSheet";
 import { shoppingCartService, type Product } from "../../services/ShoppingCart";
 
 function SuggestionSection() {
-  const [isSizeSheetOpen, setIsSizeSheetOpen] = useState(false);
-
   const handleAddClick = (product: Product) => {
     shoppingCartService.addProduct(product, 1);
   };
@@ -62,14 +58,10 @@ function SuggestionSection() {
               name: "Recycled Comfort maxitrosa",
               price: 139,
               imageUrl: "../src/assets/images/product-images/15.jpg",
-              color: "Dimrosa",
+              color: "Beige",
               size: "38/40",
             })
           }
-        />
-        <SizeSelectionSheet
-          isOpen={isSizeSheetOpen}
-          onClose={() => setIsSizeSheetOpen(false)}
         />
       </div>
     </div>

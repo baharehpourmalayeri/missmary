@@ -11,6 +11,7 @@ function QuantitySelector({
   return (
     <div className="flex flex-row justify-between items-center gap-3">
       <button
+        aria-label="Decrease quantity"
         type="button"
         className="flex h-9 w-9 items-center justify-center rounded-full bg-grey"
         onClick={onDecrease}
@@ -21,6 +22,7 @@ function QuantitySelector({
       <span className="w-8 text-center font-black">{quantity}</span>
 
       <button
+        aria-label="Increase quantity"
         type="button"
         className="flex h-9 w-9 items-center justify-center rounded-full bg-grey"
         onClick={onIncrease}
