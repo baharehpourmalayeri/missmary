@@ -1,56 +1,115 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+// SuggestionSection.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { SuggestionSection } from "./SuggestionSection";
-
-const mocks = vi.hoisted(() => ({
-  addProduct: vi.fn(),
-}));
+import { shoppingCartService } from "../../services/ShoppingCart";
+import { suggestionProductService } from "../../services/SuggestionProduct";
+import type { Product } from "../../types/product";
 
 vi.mock("../../services/ShoppingCart", () => ({
   shoppingCartService: {
-    addProduct: mocks.addProduct,
+    addProduct: vi.fn(),
   },
 }));
+
+vi.mock("../../services/SuggestionProduct", () => ({
+  suggestionProductService: {
+    getSuggestedItems: vi.fn(),
+  },
+}));
+
+vi.mock("./SuggestionItem", () => ({
+  default: ({
+    product,
+    onAddClick,
+  }: {
+    product: { name: string };
+    onAddClick: () => void;
+  }) => <button onClick={onAddClick}>{product.name}</button>,
+}));
+
+const braProduct: Product = {
+  id: "1",
+  name: "Soft Bra",
+  type: "BRA",
+  price: 299,
+  size: "sm",
+  color: "blue",
+  imageUrl: "test.jpg",
+};
+
+const pantyProduct: Product = {
+  id: "2",
+  name: "Maxi Brief",
+  type: "PANTY",
+  price: 199,
+  size: "sm",
+  color: "blue",
+  imageUrl: "test.jpg",
+};
 
 describe("SuggestionSection", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+
+    vi.mocked(suggestionProductService.getSuggestedItems).mockReturnValue([
+      braProduct,
+      pantyProduct,
+    ]);
   });
 
-  it("renders suggestion section title", () => {
+  it("renders the default title", () => {
     render(<SuggestionSection />);
+
+    expect(screen.getByText("Matchar din BH")).toBeInTheDocument();
+  });
+
+  it("loads suggested products for BRA on initial render", () => {
+    render(<SuggestionSection />);
+
+    expect(suggestionProductService.getSuggestedItems).toHaveBeenCalledWith(
+      "BRA",
+    );
+  });
+
+  it("renders suggested products", () => {
+    render(<SuggestionSection />);
+
+    expect(screen.getByText("Soft Bra")).toBeInTheDocument();
+    expect(screen.getByText("Maxi Brief")).toBeInTheDocument();
+  });
+
+  it("adds product to cart when a suggestion is clicked", () => {
+    render(<SuggestionSection />);
+
+    fireEvent.click(screen.getByText("Soft Bra"));
+
+    expect(shoppingCartService.addProduct).toHaveBeenCalledWith(braProduct, 1);
+  });
+
+  it("keeps title as 'Matchar din BH' when added product type is BRA", () => {
+    render(<SuggestionSection />);
+
+    fireEvent.click(screen.getByText("Soft Bra"));
+
+    expect(screen.getByText("Matchar din BH")).toBeInTheDocument();
+  });
+
+  it("changes title to 'Komplettera ditt köp' when added product type is not BRA", () => {
+    render(<SuggestionSection />);
+
+    fireEvent.click(screen.getByText("Maxi Brief"));
 
     expect(screen.getByText("Komplettera ditt köp")).toBeInTheDocument();
   });
 
-  it("renders suggestion products", () => {
+  it("updates suggested products based on clicked product type", () => {
     render(<SuggestionSection />);
 
-    expect(screen.getByText("Belle maxitrosa")).toBeInTheDocument();
-    expect(screen.getByText("Organic Cotton maxitrosa")).toBeInTheDocument();
-    expect(screen.getByText("Recycled Comfort maxitrosa")).toBeInTheDocument();
-  });
+    fireEvent.click(screen.getByText("Maxi Brief"));
 
-  it("adds Belle maxitrosa to cart when its cart button is clicked", async () => {
-    const user = userEvent.setup();
-
-    render(<SuggestionSection />);
-
-    const cartButtons = screen.getAllByRole("button");
-
-    await user.click(cartButtons[0]);
-
-    expect(mocks.addProduct).toHaveBeenCalledWith(
-      {
-        id: "10",
-        name: "Belle maxitrosa",
-        price: 199,
-        imageUrl: "../src/assets/images/product-images/10.jpg",
-        color: "Dimrosa",
-        size: "40/42",
-      },
-      1,
+    expect(suggestionProductService.getSuggestedItems).toHaveBeenCalledWith(
+      "PANTY",
     );
   });
 });

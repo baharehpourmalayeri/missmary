@@ -22,7 +22,8 @@
   --font-regular: "avenirregular", sans-serif;
   --font-bold: "avenirbold", sans-serif;
 
-  --text-sm: 14px;
   --text-xs: 10px;
+  --text-sm: 12px;
+  --text-md: 14px;
   --text-lg: 16px;
 }

@@ -5,7 +5,7 @@ import { ShoppingCart } from "./components/shopping-cart/shopping-cart/ShoppingC
 
 function App() {
   return (
-    <main className="min-h-screen bg-white text-black font-regular text-sm lg:text-lg">
+    <main className="min-h-screen bg-white text-black font-regular text-md lg:text-lg">
       <section className="mx-auto flex max-w-md flex-col gap-6 lg:max-w-full">
         <Header />
 
