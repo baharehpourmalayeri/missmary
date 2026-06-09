@@ -1,68 +1,38 @@
 import SuggestionItem from "./SuggestionItem";
-import { shoppingCartService, type Product } from "../../services/ShoppingCart";
+import { shoppingCartService } from "../../services/ShoppingCart";
+import { suggestionProductService } from "../../services/SuggestionProduct";
+import { useState } from "react";
+import type { Product } from "../../types/product";
 
 function SuggestionSection() {
+  const [boxTitle, setBoxTitle] = useState("Matchar din BH");
+  const [suggestedProducts, setSuggestedProducts] = useState<Product[]>(
+    suggestionProductService.getSuggestedItems("BRA"),
+  );
+
   const handleAddClick = (product: Product) => {
     shoppingCartService.addProduct(product, 1);
+    setBoxTitle(
+      product.type === "BRA" ? "Matchar din BH" : "Komplettera ditt köp",
+    );
+
+    setSuggestedProducts(
+      suggestionProductService.getSuggestedItems(product.type),
+    );
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-grey pt-2 pb-2 w-full">
+    <div className="flex flex-col gap-2 bg-grey p-2 w-full">
       <div className="text-center w-full">
-        <h3 className="font-bold mb-1">Komplettera ditt köp</h3>
+        <h3 className="font-bold mb-1">{boxTitle}</h3>
       </div>
       <div className="flex flex-row gap-6 w-full justify-center">
-        <SuggestionItem
-          id="10"
-          imageSrc="../src/assets/images/product-images/10.jpg"
-          name="Belle maxitrosa"
-          price={199}
-          offerText="4 för 3"
-          onAddClick={() =>
-            handleAddClick({
-              id: "10",
-              name: "Belle maxitrosa",
-              price: 199,
-              imageUrl: "../src/assets/images/product-images/10.jpg",
-              color: "Dimrosa",
-              size: "40/42",
-            })
-          }
-        />
-        <SuggestionItem
-          id="14"
-          imageSrc="../src/assets/images/product-images/14.jpg"
-          name="Organic Cotton maxitrosa"
-          price={149}
-          offerText="4 för 3"
-          onAddClick={() =>
-            handleAddClick({
-              id: "14",
-              name: "Organic Cotton maxitrosa",
-              price: 149,
-              imageUrl: "../src/assets/images/product-images/14.jpg",
-              color: "Dimrosa",
-              size: "36/38",
-            })
-          }
-        />
-        <SuggestionItem
-          id="15"
-          imageSrc="../src/assets/images/product-images/15.jpg"
-          name="Recycled Comfort maxitrosa"
-          price={139}
-          offerText="4 för 3"
-          onAddClick={() =>
-            handleAddClick({
-              id: "15",
-              name: "Recycled Comfort maxitrosa",
-              price: 139,
-              imageUrl: "../src/assets/images/product-images/15.jpg",
-              color: "Beige",
-              size: "38/40",
-            })
-          }
-        />
+        {suggestedProducts.map((suggestedProduct) => (
+          <SuggestionItem
+            product={suggestedProduct}
+            onAddClick={() => handleAddClick(suggestedProduct)}
+          />
+        ))}
       </div>
     </div>
   );

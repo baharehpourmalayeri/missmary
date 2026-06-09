@@ -1,73 +1,121 @@
-# React + TypeScript + Vite
+# Project Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Prerequisites
 
-Currently, two official plugins are available:
+Make sure you have the following installed:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js (v18 or later recommended)
+- npm
 
-## React Compiler
+Verify your installation:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+node --version
+npm --version
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Clone the repository and install dependencies:
+
+```bash
+npm install
 ```
+
+---
+
+## Run the Project
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Run Unit Tests
+
+Run all tests:
+
+```bash
+npm run test
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test -- --watch
+```
+
+---
+
+# Component Overview
+
+This document describes the main shopping cart and product suggestion components used in the project.
+
+## Shopping Cart Components
+
+### `shopping-cart/ShoppingCart`
+
+The main shopping cart box component.
+
+It displays the full cart area, including the list of added products and the summary section. It acts as the parent component for the shopping cart UI.
+
+### `shopping-cart/ShoppingCartItem`
+
+Displays one product item inside the shopping cart.
+
+It shows product information such as image, name, price, quantity, and uses `QuantitySelector` to update the item quantity.
+
+### `shopping-cart/QuantitySelector`
+
+A small control component used to increase or decrease the quantity of a product in the shopping cart.
+
+It usually includes minus and plus buttons and shows the current quantity of the selected item.
+
+### `shopping-cart/SummarySection`
+
+Shows the shopping cart price summary.
+
+It calculates and displays values based on the products added to the cart, such as subtotal, shipping, and total price.
+
+---
+
+## Suggestion Section Components
+
+### `suggestion-section/SuggestionSection`
+
+Displays the product suggestion section.
+
+It shows recommended products based on the current product or cart context. The section title can update depending on the selected product type.
+
+### `suggestion-section/SuggestionItem`
+
+Displays one suggested product inside the suggestion section.
+
+It shows the product image, name, price, offer text, saving message, and an add-to-cart button.
+
+---
+
+## Services
+
+### `services/ShoppingCartService`
+
+Mock shopping cart service used to manage cart data.
+
+It handles actions such as adding products, updating quantities, and returning the current cart items.
+
+### `services/SuggestionProductService`
+
+Mock suggestion product service used to provide recommendation data.
+
+It returns suggested products based on product type or category, helping the suggestion section show relevant products.

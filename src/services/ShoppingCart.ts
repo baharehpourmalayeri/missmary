@@ -1,13 +1,4 @@
-export interface Product {
-  id: string;
-  name: string;
-  size: string;
-  color: string;
-  price: number;
-  offerText?: string;
-  availabilityText?: string;
-  imageUrl: string;
-}
+import type { Product } from "../types/product";
 
 export interface CartItem extends Product {
   quantity: number;
@@ -17,11 +8,11 @@ export class ShoppingCartService {
   private items: CartItem[] = [
     {
       id: "6",
+      type: "BRA",
       name: "Belle bh",
       size: "85xE",
       color: "Dimrosa",
       price: 599,
-      offerText: "",
       availabilityText: "I lager. Skickas inom 1-2 veckor.",
       imageUrl: "../src/assets/images/product-images/6.jpg",
       quantity: 1,
